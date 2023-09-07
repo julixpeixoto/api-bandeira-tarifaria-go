@@ -1,6 +1,8 @@
 package main
 
 import (
+	"api-bandeira-tarifaria-go/client"
+	"api-bandeira-tarifaria-go/data"
 	"api-bandeira-tarifaria-go/models"
 	"encoding/json"
 	"fmt"
@@ -9,6 +11,11 @@ import (
 )
 
 func main() {
+	crawler := client.GetData()
+	formattedData := data.FormatData(crawler)
+
+	fmt.Println(formattedData)
+
 	fmt.Println("Listening on port 8080")
 
 	flags := []models.Flag{
