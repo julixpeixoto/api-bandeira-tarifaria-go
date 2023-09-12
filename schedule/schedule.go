@@ -5,9 +5,21 @@ import (
 	"api-bandeira-tarifaria-go/data"
 	"api-bandeira-tarifaria-go/database"
 	"fmt"
+	"time"
 )
 
-func Insert() {
+func Run() {
+	go scheduler(1440, insert)
+}
+
+func scheduler(intervalSeconds int, taskFunc func()) {
+	for {
+		taskFunc()
+		time.Sleep(time.Duration(intervalSeconds) * time.Second)
+	}
+}
+
+func insert() {
 	databaseData := database.GetAll()
 	crawlerData := client.GetData()
 	var dataToInsert [][]string
@@ -35,5 +47,7 @@ func Insert() {
 	if len(flagsToInsert) > 0 {
 		database.Insert(flagsToInsert)
 		fmt.Println("Inserted", len(flagsToInsert), "new flag(s)")
+	} else {
+		fmt.Println("No new flags to insert")
 	}
 }

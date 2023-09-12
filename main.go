@@ -9,9 +9,8 @@ import (
 )
 
 func main() {
-	fmt.Println("Listening on port", 8080)
 	database.Migrate()
-	schedule.Insert()
+	schedule.Run()
 
 	flags := database.GetAll()
 
@@ -20,5 +19,6 @@ func main() {
 		json.NewEncoder(w).Encode(flags)
 	})
 
+	fmt.Println("Listening on port", 8080)
 	http.ListenAndServe(":8080", nil)
 }
