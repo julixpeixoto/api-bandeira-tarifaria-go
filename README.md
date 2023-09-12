@@ -22,6 +22,8 @@ docker compose up
 
 Criar o banco de dados "flags".
 
+Copiar o arquivo [.env.example](.env.example) e renomear a cópia para .env
+
 ### ⚙️ Execução
 
 Executar o comando abaixo para iniciar a aplicação:

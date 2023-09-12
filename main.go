@@ -6,9 +6,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/spf13/viper"
 )
 
 func main() {
+	viper.SetConfigFile(".env")
+	viper.ReadInConfig()
+	viper.AutomaticEnv()
+	port := viper.GetString("PORT")
 	database.Migrate()
 	schedule.Run()
 
@@ -19,6 +25,6 @@ func main() {
 		json.NewEncoder(w).Encode(flags)
 	})
 
-	fmt.Println("Listening on port", 8080)
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Listening on port", port)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 }

@@ -2,14 +2,21 @@ package database
 
 import (
 	"api-bandeira-tarifaria-go/models"
+	"fmt"
 	"log"
 
+	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func connect() *gorm.DB {
-	dsn := "host=localhost user=postgres password=123456 dbname=flags port=15432 sslmode=disable TimeZone=Asia/Shanghai"
+	host := viper.GetString("DATABASE_HOST")
+	user := viper.GetString("DATABASE_USER")
+	password := viper.GetString("DATABASE_PASSWORD")
+	name := viper.GetString("DATABASE_NAME")
+	port := viper.GetString("DATABASE_PORT")
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, user, password, name, port)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {

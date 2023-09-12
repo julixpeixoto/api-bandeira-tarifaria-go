@@ -6,10 +6,13 @@ import (
 	"api-bandeira-tarifaria-go/database"
 	"fmt"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 func Run() {
-	go scheduler(1440, insert)
+	intervalSeconds := viper.GetInt("SCHEDULE_INTERVAL")
+	go scheduler(intervalSeconds, insert)
 }
 
 func scheduler(intervalSeconds int, taskFunc func()) {

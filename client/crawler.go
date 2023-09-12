@@ -6,10 +6,11 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/spf13/viper"
 )
 
 func GetData() [][]string {
-	res, err := http.Get("https://sic.cercos.com.br/sic/bandeiras_tarifarias/")
+	res, err := http.Get(viper.GetString("DATA_SOURCE_URL"))
 
 	if err != nil {
 		log.Fatal(err)
