@@ -10,14 +10,16 @@ import (
 	"github.com/spf13/viper"
 )
 
-func main() {
+func init() {
 	viper.SetConfigFile(".env")
 	viper.ReadInConfig()
 	viper.AutomaticEnv()
-	port := viper.GetString("PORT")
 	database.Migrate()
 	schedule.Run()
+}
 
+func main() {
+	port := viper.GetString("PORT")
 	flags := database.GetAll()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
